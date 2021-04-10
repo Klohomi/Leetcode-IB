@@ -1,0 +1,73 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+ bool compare(Interval interval1, Interval interval2){
+     return interval1.start<interval2.start;
+ }
+ 
+vector<Interval> Solution::insert(vector<Interval> &intervals, Interval n) {
+    if(n.start>n.end)swap(n.start,n.end);
+  //  cout<<n.start<<" "<<n.end<<endl;
+    intervals.push_back(n);
+    sort(intervals.begin(),intervals.end(),compare);
+    
+    vector<Interval> snoop;
+    int s= intervals.size();
+    
+    int start =-1;
+    int end=-1;
+    
+    for(int i=0;i<s-1;i++){
+        
+       if(start==-1)  start=intervals[i].start;
+        if(end==-1) end=intervals[i].end;
+        
+        //if(start==-1)start=intervals[i].start;
+        
+        if(intervals[i+1].start > end){
+            Interval damn;
+            damn.start=start;
+            damn.end = end;
+            snoop.push_back(damn);
+           
+            start=-1;
+            end= -1;
+            
+        }
+        else{
+            if(intervals[i+1].end>end)
+                end= intervals[i+1].end;
+        }
+        
+    }
+    
+    if(end!=-1){
+        Interval damn;
+        damn.start=start;
+        damn.end = end;
+        snoop.push_back(damn);
+        return snoop;
+    }
+    
+    
+    if(intervals[s-1].start > intervals[s-2].end){
+        snoop.push_back(intervals[s-1]);
+    }
+    else{
+         end= intervals[s-1].end;
+        Interval damn;
+        damn.start=start;
+        damn.end = end;
+        snoop.push_back(damn);
+    }
+    
+    
+    
+    return snoop;
+}
