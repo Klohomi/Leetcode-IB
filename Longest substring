@@ -1,0 +1,56 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+string longestPalin (string S);
+int main()
+{
+    int t; cin >> t;
+    while (t--)
+    {
+        string S; cin >> S;
+
+        cout << longestPalin (S) << endl;
+    }
+}
+// Contributed By: Pranay Bansal
+// } Driver Code Ends
+
+
+
+string longestPalin (string s)
+{
+    int n= s.length();
+    vector<vector<bool>> table(n,vector<bool>(n,0));
+    
+    for(int i=0;i<n;i++)table[i][i]=1;
+    int start=0;
+    int maxlen=1;
+    for(int i=0;i<n-1;i++){
+        if(s[i]==s[i+1]){
+            table[i][i+1]=1;
+            if(maxlen!=2){
+            start=i;
+            maxlen=2;
+            }
+        }
+    }
+    
+    // k would be the length
+    
+    for(int k=3;k<=n;k++){
+        for(int i=0;i<n-k+1;i++){
+            int j= i+k-1;
+            if(s[i]==s[j] && table[i+1][j-1]==1){
+                if(k>maxlen){
+                    maxlen=k;
+                    start=i;
+                }
+                table[i][j]=1;
+            }
+        }
+    }
+    
+    string jhc = s.substr(start,maxlen);
+    return jhc;
+}
