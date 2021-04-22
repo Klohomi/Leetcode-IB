@@ -1,0 +1,25 @@
+//int cnt=0;
+
+int expand(string s, int left, int right){
+    int cnt=0;
+    while(left>=0 && right<=s.length() && s[left]==s[right]){
+        cnt++;
+        left--;
+        right++;
+    }
+    return cnt;
+}
+
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n=s.length();
+        int jhc=0;
+        for(int i=0;i<n;i++){
+            jhc+= expand(s,i,i);
+            jhc+= expand(s,i,i+1);
+        }
+        
+        return jhc;
+    }
+};
