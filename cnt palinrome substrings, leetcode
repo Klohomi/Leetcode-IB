@@ -1,5 +1,7 @@
 //int cnt=0;
 
+// https://leetcode.com/problems/palindromic-substrings/
+
 int expand(string s, int left, int right){
     int cnt=0;
     while(left>=0 && right<=s.length() && s[left]==s[right]){
