@@ -1,0 +1,36 @@
+
+int reverse(int n){
+    int b=0;
+    while(n){
+        b<<=1;
+        b |= n&1;
+        n=n>>1;
+    }
+    return b;
+}
+
+
+int Solution::solve(int n) {
+    if(n==1)return 1;
+    int ans,count=1,p;
+    int len=1;
+    while(count<n){
+        len++;
+        if(len%2==0){
+            p=len/2 -1;
+        }
+        else p= len/2;
+        
+        count += pow(2,p);
+    }
+    count-= (int)pow(2,p);
+    
+    ans= pow(2,len-1);// setting front one
+    
+    int rem = n-count-1;
+    
+    ans|= rem* (int)pow(2,len/2); // adding the bits before the center one
+    
+    ans|=reverse(ans);// copying the bits from right to the left
+    return ans;
+}
