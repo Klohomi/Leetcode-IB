@@ -1,0 +1,36 @@
+bool isvalid( vector<vector<int>> & A,int i ,int j){
+    int n=A.size(),m=A[0].size();
+    if(i>=n || i<0 || j>=m || j<0) return false;
+    return true;
+}
+int reg;
+void dfs( vector<vector<bool>> & visited,vector<vector<int>> &A, int i, int j){
+    if(!isvalid(A,i,j))return ;
+    visited[i][j]=true;
+    vector<int> x={0,1,-1},y={0,1,-1};
+    
+    for(int dx:x){
+        for(int dy:y){
+            if(isvalid(A,i+dx,j+dy) && !visited[i+dx][j+dy] && A[i+dx][j+dy]==1){
+                 reg++;
+                 dfs(visited,A,i+dx,j+dy);
+            }
+        }
+    }
+}
+
+int Solution::solve(vector<vector<int> > &A) {
+    int maxreg=0;
+    int n=A.size(),m=A[0].size();
+    vector<vector<bool>> visited(n,vector<bool>(m,false));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(!visited[i][j] && A[i][j]==1){
+                 reg = 1;
+                dfs(visited,A,i,j);
+                maxreg= max(maxreg,reg);    
+            }
+        }
+    }
+    return maxreg;
+}
